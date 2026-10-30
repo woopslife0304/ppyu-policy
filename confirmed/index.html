@@ -1,0 +1,122 @@
+<!doctype html>
+<!--
+  쀼가계부 가입 확인 완료 페이지 (공개용 웹 페이지, 2026-10-30)
+  - 가입 확인 메일의 링크를 누르면 Supabase가 이메일 인증을 끝낸 뒤 이 페이지로 보낸다.
+    (예전에는 앱 주소로 바로 보내서, PC에서 누르면 "제목 없음" 빈 화면만 보였다)
+  - 휴대폰이면 [쀼가계부 앱 열기] 버튼으로 앱을 열어 바로 로그인시킨다.
+  - 개인정보처리방침과 같은 공개 저장소(ppyu-policy)의 confirmed/ 폴더에 올린다.
+    주소: https://woopslife0304.github.io/ppyu-policy/confirmed/
+    이 주소는 앱의 lib/utils/app_links.dart(emailConfirmedUrl)와 Supabase Redirect URLs에도 있어야 한다.
+  - 외부 스크립트·추적 없음. 주소에 붙어 온 로그인 값은 이 기기 안에서 앱으로만 넘긴다.
+-->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>쀼가계부 이메일 인증</title>
+  <style>
+    /* 색은 브랜드 가이드(.claude/brand_design_guide.md)와 같게 */
+    :root {
+      --coral: #FF6575;
+      --sky: #429BD5;
+      --bg: #FFF7E8;
+      --text: #493A36;
+      --card: #FFFFFF;
+      --line: #EADFCC;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #1E1614; --text: #F3E9E4; --card: #2C2321; --line: #4A3D39; }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      line-height: 1.6;
+      word-break: keep-all;
+      padding: 24px 16px;
+    }
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .logo { font-size: 1.5rem; font-weight: 800; margin: 0 0 20px; }
+    .logo .c { color: var(--coral); }
+    .logo .s { color: var(--sky); }
+    .icon { font-size: 3rem; line-height: 1; margin-bottom: 12px; }
+    h1 { font-size: 1.3rem; margin: 0 0 8px; }
+    p { margin: 0 0 8px; }
+    .sub { font-size: 0.92rem; opacity: 0.8; }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      background: var(--coral);
+      color: #FFFFFF;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <p class="logo"><span class="c">쀼</span><span class="s">가계부</span></p>
+
+    <!-- 인증 성공 -->
+    <section id="ok">
+      <div class="icon">✅</div>
+      <h1>이메일 인증이 완료됐어요</h1>
+      <p id="ok-pc">쀼가계부 앱으로 돌아가서 <b>이메일과 비밀번호로 로그인</b>해 주세요.</p>
+      <p id="ok-mobile" class="hidden">아래 버튼을 누르면 앱이 열리고 바로 로그인돼요.</p>
+      <a id="open-app" class="btn hidden" href="#">쀼가계부 앱 열기</a>
+      <p class="sub" style="margin-top:16px">이 창은 닫아도 돼요.</p>
+    </section>
+
+    <!-- 링크가 만료됐거나 이미 사용됨 -->
+    <section id="fail" class="hidden">
+      <div class="icon">⏰</div>
+      <h1>링크가 만료됐거나 이미 사용됐어요</h1>
+      <p>앱에서 <b>이메일과 비밀번호로 로그인</b>해 보세요.<br>이미 인증된 계정이면 바로 들어가져요.</p>
+      <p class="sub">로그인이 안 되면 앱에서 다시 가입하면 새 확인 메일을 보내 드려요.</p>
+    </section>
+  </main>
+
+  <script>
+    // Supabase가 붙여 준 값: 성공이면 ?code=… (또는 #access_token=…), 실패면 #error=… / ?error=…
+    var search = window.location.search;
+    var hash = window.location.hash;
+    var failed = /(^|[?#&])error(_code|_description)?=/.test(search + hash);
+
+    if (failed) {
+      document.getElementById('ok').classList.add('hidden');
+      document.getElementById('fail').classList.remove('hidden');
+    } else if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      // 휴대폰: 받은 값을 그대로 앱 주소에 붙여 앱을 연다 → 앱이 로그인을 마무리한다
+      var appLink = 'com.alkongmochi.ppyubudget://login-callback' + search + hash;
+      var button = document.getElementById('open-app');
+      button.href = appLink;
+      button.classList.remove('hidden');
+      document.getElementById('ok-mobile').classList.remove('hidden');
+      document.getElementById('ok-pc').classList.add('hidden');
+    }
+
+    // 주소창·방문 기록에 로그인 값이 남지 않게 지운다 (버튼에는 이미 담겨 있음)
+    if (search || hash) {
+      history.replaceState(null, '', window.location.pathname);
+    }
+  </script>
+</body>
+</html>
