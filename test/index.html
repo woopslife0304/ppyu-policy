@@ -1,0 +1,214 @@
+<!doctype html>
+<!--
+  쀼가계부 테스터 설치 안내 (공개용 웹 페이지, 2026-10-30)
+  - 테스터(지인)에게 이 주소 하나만 보내면 되게 만든 페이지. 운영자용 진행 방법은 docs/tester_guide.md.
+  - 개인정보처리방침과 같은 공개 저장소(ppyu-policy)의 test/ 폴더에 올린다.
+    주소: https://woopslife0304.github.io/ppyu-policy/test/
+  - Play 링크 두 개는 앱 ID(com.alkongmochi.ppyubudget)로 정해지는 주소라 미리 넣어 두었다.
+    Play 콘솔에서 비공개 테스트를 시작해야 열린다 (그 전에는 "찾을 수 없음").
+  - 외부 스크립트·추적 없음.
+-->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>쀼가계부 테스트 설치 안내</title>
+  <style>
+    /* 색은 브랜드 가이드(.claude/brand_design_guide.md)와 같게 */
+    :root {
+      --coral: #FF6575;
+      --sky: #429BD5;
+      --yellow: #FFC653;
+      --bg: #FFF7E8;
+      --text: #493A36;
+      --card: #FFFFFF;
+      --line: #EADFCC;
+      --soft: #FFE3E6;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #1E1614; --text: #F3E9E4; --card: #2C2321; --line: #4A3D39; --soft: #4A2A2E; }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      line-height: 1.65;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+    main { max-width: 560px; margin: 0 auto; padding: 28px 16px 48px; }
+    header { text-align: center; margin-bottom: 20px; }
+    .logo { font-size: 1.6rem; font-weight: 800; margin: 0; }
+    .logo .c { color: var(--coral); }
+    .logo .s { color: var(--sky); }
+    header p { margin: 4px 0 0; opacity: 0.8; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px 18px;
+      margin-bottom: 16px;
+    }
+    h2 { font-size: 1.12rem; margin: 0 0 10px; color: var(--coral); }
+    h3 { font-size: 1rem; margin: 16px 0 6px; }
+    ol, ul { margin: 0; padding-left: 1.3em; }
+    li { margin-bottom: 6px; }
+    p { margin: 0 0 8px; }
+    .tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 1px 8px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--coral);
+      vertical-align: 2px;
+    }
+    .btn {
+      display: block;
+      text-align: center;
+      margin: 10px 0 4px;
+      padding: 13px 16px;
+      border-radius: 999px;
+      background: var(--coral);
+      color: #FFFFFF;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .btn.sub { background: transparent; color: var(--text); border: 1.5px solid var(--line); }
+    .note {
+      background: var(--soft);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-top: 10px;
+      font-size: 0.93rem;
+    }
+    .muted { font-size: 0.9rem; opacity: 0.8; }
+    b.k { color: var(--coral); }
+    a { color: var(--sky); }
+    .toc { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 12px; }
+    .toc a {
+      font-size: 0.88rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--text);
+      text-decoration: none;
+      background: var(--card);
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="logo"><span class="c">쀼</span><span class="s">가계부</span></p>
+    <p>테스트에 참여해 주셔서 고맙습니다 🙏</p>
+    <nav class="toc">
+      <a href="#ready">준비</a>
+      <a href="#play">Play 스토어로 설치</a>
+      <a href="#apk">파일로 설치</a>
+      <a href="#start">처음 사용</a>
+      <a href="#feedback">의견 보내기</a>
+      <a href="#faq">안 될 때</a>
+    </nav>
+  </header>
+
+  <section id="ready">
+    <h2>1. 시작하기 전에</h2>
+    <ul>
+      <li><b>안드로이드 휴대폰</b>만 됩니다. (아이폰은 아직 준비 중이에요)</li>
+      <li>Play 스토어에서 쓰는 <b>구글 계정(Gmail 주소)</b>을 운영자에게 알려 주세요. 이 주소로만 테스트 앱이 보여요.</li>
+      <li>운영자가 <b>어떤 방법으로 설치할지</b> 알려 드려요. 보통은 <b class="k">2번(Play 스토어)</b>이고, 스토어 준비 전에는 <b>3번(파일)</b>이에요.</li>
+    </ul>
+  </section>
+
+  <section id="play">
+    <h2>2. Play 스토어로 설치 <span class="tag">보통 이 방법</span></h2>
+    <ol>
+      <li>운영자에게 알려 준 <b>구글 계정으로 로그인한 휴대폰</b>에서 아래 버튼을 눌러요.
+        <a class="btn" href="https://play.google.com/apps/testing/com.alkongmochi.ppyubudget">① 테스트 참여하기</a>
+      </li>
+      <li>열린 화면에서 <b>"테스터 되기"</b>(Become a tester)를 눌러요.</li>
+      <li>"테스터가 되었습니다"가 나오면 아래 버튼으로 Play 스토어를 열고 <b>설치</b>를 눌러요.
+        <a class="btn sub" href="https://play.google.com/store/apps/details?id=com.alkongmochi.ppyubudget">② Play 스토어에서 설치</a>
+      </li>
+    </ol>
+    <div class="note">
+      ⏰ <b>14일 동안 지우지 말아 주세요.</b> 구글 규칙상 테스터 12명이 14일 이상 계속 참여해야 정식 출시를 할 수 있어요.
+      매일 쓰지 않아도 괜찮지만, 가끔 열어서 써 주시면 큰 도움이 돼요.
+    </div>
+    <p class="muted" style="margin-top:10px">
+      "찾을 수 없음"이 나오면 아직 운영자가 테스트를 열지 않았거나, 다른 구글 계정으로 로그인되어 있는 거예요.
+      Play 스토어 오른쪽 위 프로필에서 계정을 확인해 주세요. 참여 후 스토어에 뜨기까지 몇 시간 걸릴 수도 있어요.
+    </p>
+  </section>
+
+  <section id="apk">
+    <h2>3. 파일(APK)로 설치 <span class="tag">스토어 준비 전</span></h2>
+    <ol>
+      <li>운영자가 카카오톡 등으로 보낸 <b>app-release.apk</b> 파일을 눌러 받아요.</li>
+      <li>받은 파일을 누르면 <b>"출처를 알 수 없는 앱"</b> 안내가 나와요 → <b>설정</b> → 지금 쓰는 앱(카카오톡·내 파일 등)의 <b>"이 출처 허용"</b>을 켜고 뒤로 가기.</li>
+      <li><b>설치</b>를 눌러요.</li>
+      <li>"Play 프로텍트" 경고가 나오면 <b>세부정보 더보기 → 무시하고 설치</b>를 눌러요. 스토어를 거치지 않은 앱이라 나오는 안내예요.</li>
+    </ol>
+    <div class="note">
+      🔁 나중에 Play 스토어 테스트가 시작되면 <b>이 앱을 먼저 지우고</b> 2번 방법으로 다시 설치해 주세요.
+      (파일로 깐 앱과 스토어 앱은 서명이 달라서 위에 덮어 설치가 안 돼요.)
+      가계부 내용은 서버에 있어서, 같은 계정으로 다시 로그인하면 그대로 보여요.
+    </div>
+  </section>
+
+  <section id="start">
+    <h2>4. 처음 사용하기</h2>
+    <h3>로그인</h3>
+    <ul>
+      <li><b>구글</b> 또는 <b>카카오</b>로 로그인하면 가장 쉬워요.</li>
+      <li>이메일로 가입하면 <b>확인 메일</b>이 와요. 메일의 링크를 누르면 "인증 완료"가 나오고, 앱에서 로그인하면 돼요.
+        메일이 안 보이면 <b>스팸함</b>도 봐 주세요.</li>
+    </ul>
+    <h3>가계부 만들기 · 배우자 연결</h3>
+    <ul>
+      <li>처음 로그인하면 <b>"가계부 만들기"</b>를 눌러요.</li>
+      <li>배우자(또는 같이 테스트하는 분)와 함께 쓰려면: 한 사람이 <b>⚙ → 설정 → 배우자 초대</b>에서 6자리 코드를 만들고,
+        다른 사람은 가계부를 만들기 전에 <b>"초대 코드 입력"</b>에 그 코드를 넣어요.</li>
+      <li>혼자 테스트해도 괜찮아요.</li>
+    </ul>
+    <h3>써 보면 좋은 것</h3>
+    <ul>
+      <li>아래 <b>+</b> 버튼으로 지출·수입 입력 (공동 / 개인 구분)</li>
+      <li><b>예산</b> 탭에서 이번 달 예산 정하기</li>
+      <li><b>통계</b> 탭에서 카테고리별·월별 지출 보기</li>
+      <li><b>경조사</b> 탭에서 축의금·부조금 기록</li>
+      <li>⚙ → 설정 → <b>결제 알림 자동 인식</b>(선택): 카드·은행 앱 알림을 읽어 "새 결제"로 모아 줘요.
+        알림 내용은 휴대폰 안에만 저장되고, 내가 [추가]를 눌러야 가계부에 들어가요.</li>
+    </ul>
+  </section>
+
+  <section id="feedback">
+    <h2>5. 의견 보내기</h2>
+    <p>불편한 점, 이상한 점, 있었으면 하는 기능 모두 좋아요. 화면 캡처가 있으면 더 좋아요.</p>
+    <ul>
+      <li>앱 안: <b>⚙ → 설정 → 문의하기</b></li>
+      <li>메일: <a href="mailto:help@alkongmochi.com">help@alkongmochi.com</a></li>
+      <li>또는 운영자에게 카카오톡으로 편하게 보내 주세요.</li>
+    </ul>
+  </section>
+
+  <section id="faq">
+    <h2>6. 안 될 때</h2>
+    <h3>"테스터 되기" 화면이 안 열려요</h3>
+    <p>운영자에게 알려 준 구글 계정과 휴대폰·브라우저에 로그인된 계정이 같은지 확인해 주세요. 크롬에서 열면 잘 돼요.</p>
+    <h3>쀼가계부가 두 개 깔렸어요</h3>
+    <p>예전에 받은 테스트 앱이 남아 있는 거예요. 둘 다 지우고 2번 방법으로 다시 설치해 주세요.</p>
+    <h3>가입 확인 메일이 안 와요</h3>
+    <p>스팸함을 확인하고, 5분이 지나도 없으면 다시 가입하거나 구글·카카오 로그인을 써 주세요.</p>
+    <h3>계정·데이터를 지우고 싶어요</h3>
+    <p>⚙ → 설정 맨 아래 <b>회원 탈퇴</b>를 누르면 바로 지워져요. 자세한 내용은
+      <a href="https://woopslife0304.github.io/ppyu-policy/">개인정보처리방침</a>에 있어요.</p>
+  </section>
+</main>
+</body>
+</html>
